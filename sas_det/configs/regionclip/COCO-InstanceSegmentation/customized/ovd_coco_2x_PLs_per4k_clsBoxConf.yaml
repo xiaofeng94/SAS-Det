@@ -1,0 +1,20 @@
+_BASE_: "./CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml"
+MODEL:
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    USE_ADAPTIVE_THRES: True
+    PL_THRESHOLD: 0.9
+    MIN_AVG_PLS: 1.0
+    MAX_AVG_PLS: 3.0
+    PL_NMS_THRES: 0.5
+    RPN_FUSION_METHOD: "avg_norm_scores"
+    CATEGORY_INFO: "datasets/coco_ovd_continue_cat_ids.json"
+    # periodic update
+    USE_PERIODIC_UPDATE: True 
+    PERIODIC_STEPS: (40000, 80000, 120000, 160000)
+    # box reg
+    BOX_CONFIDENCE_THRES: 1.0   # no box reg for PL boxes
+SOLVER:
+  STEPS: (120000, 160000)
+  MAX_ITER: 180000  # 180000 * 16 / 100000 ~ 28.8 epochs
+  CHECKPOINT_PERIOD: 20000

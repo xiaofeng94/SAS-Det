@@ -1,0 +1,34 @@
+_BASE_: "./regionclip/LVISv1-InstanceSegmentation/CLIP_fast_rcnn_R_50_C4.yaml"
+MODEL:
+  ROI_HEADS:
+    NAME: "EnsembleCLIPRes5ROIHeads"    #
+  ROI_BOX_HEAD:
+    NAME: "CLIP_BOX_HEAD"    # close-branch head
+    # NUM_FC: 2
+    POOLER_RESOLUTION: 14
+    CLS_AGNOSTIC_BBOX_REG: True
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    #
+    USE_ADAPTIVE_THRES: True
+    PL_NMS_THRES: 0.5
+    PL_THRESHOLD: 0.925
+    MIN_AVG_PLS: 2.0
+    MAX_AVG_PLS: 4.0
+    ADAPTIVE_THRES_DELTA: 0.005
+    RPN_FUSION_METHOD: "avg_logits"
+    CATEGORY_INFO: None   # if None, assume novel cat ids >= len(base_categories)
+    # periodic update
+    USE_PERIODIC_UPDATE: True
+    PERIODIC_STEPS: (120000, 160000)
+    # box reg, cls loss
+    BOX_CONFIDENCE_THRES: 1.0   # no box reg for PL boxes
+    USE_CONFIDENCE_WEIGHT: False  # False for LVIS
+  ENSEMBLE:
+    ALPHA: 0.33
+    BETA: 0.67
+    # TEST_CATEGORY_INFO: "datasets/lvis_ovd_continue_cat_ids.json"
+SOLVER:
+  CHECKPOINT_PERIOD: 20000
+TEST:
+  EVAL_PERIOD: 20000

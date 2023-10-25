@@ -1,0 +1,9 @@
+_BASE_: "./ovd_lvis_R50_C4_ensemble_PLs.yaml"
+DATASETS:
+  TRAIN: ('lvis_v1_train_SASDet_r50x4_PLs', 'lvis_v1_o365_SASDet_r50x4_PLs',)
+SOLVER:
+  CHECKPOINT_PERIOD: 20000
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
+TEST:
+  EVAL_PERIOD: 20000

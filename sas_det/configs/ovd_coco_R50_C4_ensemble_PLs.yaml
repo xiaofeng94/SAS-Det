@@ -1,0 +1,17 @@
+_BASE_: "./ovd_coco_R50_C4_ensemble.yaml"
+MODEL:
+  ROI_BOX_HEAD:
+    NAME: "CLIP_BOX_HEAD"    # close-branch head
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    #
+    USE_ADAPTIVE_THRES: True
+    PL_THRESHOLD: 0.85
+    PL_NMS_THRES: 0.5
+    RPN_FUSION_METHOD: "avg_norm_scores"
+    CATEGORY_INFO: None
+    # periodic update
+    USE_PERIODIC_UPDATE: True
+    # box reg, cls loss
+    BOX_CONFIDENCE_THRES: 1.0
+    USE_CONFIDENCE_WEIGHT: True

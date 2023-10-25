@@ -1,0 +1,11 @@
+# macOS stuff
+*.DS_Store
+
+# Python caches
+**/__pycache__
+
+# Ignore all output directories and experiment scripts in the individual projects
+/output/
+/datasets
+/pretrained_ckpt/
+/pretrained_ckpt

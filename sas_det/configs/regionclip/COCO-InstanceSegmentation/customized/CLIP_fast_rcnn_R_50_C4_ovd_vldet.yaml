@@ -1,0 +1,39 @@
+_BASE_: "../CLIP_fast_rcnn_R_50_C4_ovd.yaml"
+MODEL:
+  CLIP:
+    CROP_REGION_TYPE: "RPN"
+    # OFFLINE_RPN_NMS_THRESH: 0.3 # will change offline_cfg.MODEL.RPN.NMS_THRESH, will affect the eval performance
+    # PRETRAIN_RPN_REGIONS: 300   # will change offline_cfg.MODEL.RPN.POST_NMS_TOPK_TEST
+    PRETRAIN_SAMPLE_REGIONS: 32   # num_regions_per_img, topk in box selection
+    # for inference
+    NO_BOX_DELTA: False   # check
+    USE_TEXT_EMB_CLASSIFIER: True
+    MULTIPLY_RPN_SCORE: False   # check
+  WEAK_LOSS:
+    WEAK_LOSS_WEIGHT: 0.01
+    BOX_SELECT_THRES: 0.97   # threshold in box selection
+    NEG_CONCEPT_NUM: 10
+DATASETS:
+  TRAIN: ("coco_2017_ovd_b_train", "coco_caption_nouns_train_4764tags",) # coco_2017_ovd_b_train with 48 cats
+  TEST: ("coco_generalized_del_val",)
+INPUT:
+  CUSTOM_AUG: ResizeShortestEdge
+  MIN_SIZE_TRAIN_SAMPLING: range
+  MIN_SIZE_TRAIN: (800, 800)
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1, 4]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [2, 8]
+  USE_RFS: [False, False]
+  DATASET_MIN_SIZES: [[800, 800], [400, 400]]
+  DATASET_MAX_SIZES: [1333, 667]
+  FILTER_EMPTY_ANNOTATIONS: False
+  MULTI_DATASET_GROUPING: True
+  DATASET_ANN: ['box', 'caption']
+  NUM_WORKERS: 8
+TEST:
+  EVAL_PERIOD: 10000
+FIND_UNUSED_PARAM: True
+WITH_IMAGE_LABELS: True
+OUTPUT_DIR: output/test

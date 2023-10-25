@@ -1,0 +1,14 @@
+_BASE_: "./RegionCLIP_RN50_onlinePL_box_weak.yaml"
+MODEL:
+  RESNETS:
+    DEPTH: 200
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 18
+  CLIP:
+    TEACHER_RESNETS_DEPTH: 200
+    TEACHER_POOLER_RESOLUTION: 18
+    TEXT_EMB_DIM: 640
+    # TEXT_EMB_PATH: None   # for classifer, not used in pretraining if MODEL.IGNORE_CLS_LOSS True
+    OPENSET_TEST_TEXT_EMB_PATH: "./pretrained_ckpt/concept_emb/coco_65_cls_emb_rn50x4.pth"   # use emb from r50x4
+OUTPUT_DIR: output/r50x4_pre_onlinePL_boxWeak
+

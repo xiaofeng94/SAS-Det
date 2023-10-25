@@ -1,0 +1,33 @@
+_BASE_: "../CLIP_fast_rcnn_R_50_C4.yaml"
+MODEL:
+  ROI_HEADS:
+    NUM_CLASSES: 1203 # base + novel categories
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    #
+    USE_ADAPTIVE_THRES: True
+    PL_NMS_THRES: 0.5
+    PL_THRESHOLD: 0.925
+    MIN_AVG_PLS: 2.0
+    MAX_AVG_PLS: 3.0
+    ADAPTIVE_THRES_DELTA: 0.005
+    RPN_FUSION_METHOD: "avg_logits"
+    # CATEGORY_INFO: "datasets/lvis_ovd_continue_cat_ids.json"
+    # periodic update
+    USE_PERIODIC_UPDATE: True 
+    PERIODIC_STEPS: (120000, 160000)
+    # box reg
+    BOX_CONFIDENCE_THRES: 1.0   # no box reg for PL boxes
+DATASETS:
+  TRAIN: ("lvis_v1_train_base_1203cats",)
+  TEST: ("lvis_v1_val",)
+SOLVER:
+  IMS_PER_BATCH: 16
+  BASE_LR: 0.002
+  STEPS: (120000, 160000)
+  MAX_ITER: 180000  # 180000 * 16 / 100000 ~ 28.8 epochs
+  WARMUP_ITERS: 5000
+  CHECKPOINT_PERIOD: 20000
+TEST:
+  EVAL_PERIOD: 20000
+OUTPUT_DIR: output/ovd_lvis_ft_PLs_per4kUpdate_boxConf

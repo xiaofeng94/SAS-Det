@@ -1,0 +1,26 @@
+_BASE_: "../CLIP_fast_rcnn_R_50_C4_ovd.yaml"
+MODEL:
+  META_ARCHITECTURE: "MyCLIPFastRCNN"
+  ROI_HEADS:
+    NUM_CLASSES: 65 # base + novel categories
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    USE_ADAPTIVE_THRES: True
+    PL_THRESHOLD: 0.9
+    MIN_AVG_PLS: 1.0
+    MAX_AVG_PLS: 3.0
+    PL_NMS_THRES: 0.5
+    RPN_FUSION_METHOD: "avg_norm_scores"
+    CATEGORY_INFO: "datasets/coco_ovd_continue_cat_ids.json"
+    # periodic update
+    USE_PERIODIC_UPDATE: True 
+    PERIODIC_STEPS: (40000, 60000, 80000)
+    # box reg
+    BOX_CONFIDENCE_THRES: 1.0   # no box reg for PL boxes
+DATASETS:
+  TRAIN: ("coco_2017_ovd_b_train_65cats",)
+  TEST: ("coco_2017_ovd_all_test",)
+SOLVER:
+  CHECKPOINT_PERIOD: 10000
+TEST:
+  EVAL_PERIOD: 5000

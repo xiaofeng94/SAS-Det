@@ -1,0 +1,22 @@
+_BASE_: "../CLIP_fast_rcnn_R_50_C4_ovd.yaml"
+MODEL:
+  ROI_HEADS:
+    NUM_CLASSES: 65  # base + novel categories
+  OVD:
+    WITH_PSEUDO_LABELS: True
+    USE_ADAPTIVE_THRES: True
+    PL_THRESHOLD: 0.8  # init pl threshold
+    PL_NMS_THRES: 0.5
+    RPN_FUSION_METHOD: "avg_norm_scores"
+    USE_PERIODIC_UPDATE: True
+    BOX_CONFIDENCE_THRES: 1.0   # only use pseudo boxes with confidence > BOX_CONFIDENCE_THRES. 1.0 means no pseudo boxes
+    USE_CONFIDENCE_WEIGHT: True
+DATASETS:
+  TRAIN: ("coco_2017_ovd_b_train_65cats",)
+  TEST: ("coco_2017_ovd_all_test",)
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: False   # empty images may contain novel categories
+SOLVER:
+  CHECKPOINT_PERIOD: 10000
+TEST:
+  EVAL_PERIOD: 5000

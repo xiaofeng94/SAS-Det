@@ -1,0 +1,70 @@
+_BASE_: "./RegionCLIP_RN50.yaml"
+MODEL:
+  META_ARCHITECTURE: "WeakPretrainFastRCNN"
+  IGNORE_CLS_LOSS: True   # disable weak loss
+  BACKBONE:
+    NAME: "build_clip_resnet_backbone_from_pretrain"
+    FREEZE_AT: 2
+  ROI_HEADS:
+    NAME: "CLIPRes5ROIHeads"    # pretrain roi head
+    IN_FEATURES: ["res4"]
+    NUM_CLASSES: 1  # box only roi head, used in pretraining to setup self.cls_score
+    # for ZS inference
+    NMS_THRESH_TEST: 0.5
+  # for ZS inference
+  ROI_BOX_HEAD:
+    NAME: ""
+    NUM_FC: 0
+    # POOLER_RESOLUTION: 14
+    CLS_AGNOSTIC_BBOX_REG: True
+  CLIP:
+    CROP_REGION_TYPE: "RPN"
+    OFFLINE_RPN_NMS_THRESH: 0.7 # will affect the eval performance
+    # GATHER_GPUS: True
+    # PRETRAIN_RPN_REGIONS: 300   # will change offline_cfg.MODEL.RPN.POST_NMS_TOPK_TEST
+    PRETRAIN_SAMPLE_REGIONS: 64   # num_regions_per_img, topk in box selection
+    # for ZS inference
+    NO_BOX_DELTA: False       # pretrain roi head
+    OPENSET_TEST_TEXT_EMB_PATH: "./pretrained_ckpt/concept_emb/coco_65_cls_emb.pth"
+    USE_TEXT_EMB_CLASSIFIER: True
+    MULTIPLY_RPN_SCORE: True
+  WEAK_LOSS:
+    WEAK_LOSS_WEIGHT: 0.01
+    IMAGE_LOSS_WEIGHT: 0.1
+    BOX_SELECT_THRES: 0.97   # threshold in box selection
+DATASETS:
+  TRAIN: ("lvis_v1_train_base_box_only", "loc_narr_nouns_train_4764tags",)
+  TEST: ("coco_generalized_del_val",)
+INPUT:
+  CUSTOM_AUG: ResizeShortestEdge
+  MIN_SIZE_TRAIN_SAMPLING: range
+  MIN_SIZE_TRAIN: (800, 800)
+DATALOADER:
+  SAMPLER_TRAIN: "MultiDatasetSampler"
+  DATASET_RATIO: [1, 8]
+  USE_DIFF_BS_SIZE: True
+  DATASET_BS: [2, 16]
+  USE_RFS: [False, False]
+  DATASET_MIN_SIZES: [[800, 800], [400, 400]]
+  DATASET_MAX_SIZES: [1333, 667]
+  FILTER_EMPTY_ANNOTATIONS: False
+  MULTI_DATASET_GROUPING: True
+  DATASET_ANN: ['box', 'caption']
+  NUM_WORKERS: 8
+TEST:
+  DETECTIONS_PER_IMAGE: 100  # LVIS allows up to 300
+  EVAL_PERIOD: 10000
+SOLVER:
+  IMS_PER_BATCH: 96 # 32 gpus
+  BASE_LR: 0.002
+  WEIGHT_DECAY: 0.0001
+  STEPS: (240000, 320000)
+  MAX_ITER: 360000
+  CHECKPOINT_PERIOD: 40000
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_TYPE: "norm"
+    CLIP_VALUE: 5.0
+FIND_UNUSED_PARAM: True
+WITH_IMAGE_LABELS: True   # load image tags
+OUTPUT_DIR: output/r50_pre_onlinePL_box_emaWeak_cc3m
