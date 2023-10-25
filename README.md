@@ -21,6 +21,8 @@ Download and install [Detectron2](https://github.com/facebookresearch/detectron2
 - Download various RegionCLIP's [pretrained weights](https://drive.google.com/drive/folders/1hzrJBvcCrahoRcqJRqzkIGFO_HUSJIii). Check [here](https://github.com/microsoft/RegionCLIP/blob/main/docs/MODEL_ZOO.md#model-downloading) for more details.
 Create a new folder `pretrained_ckpt` to put those weights. In this repository, `regionclip`, `concept_emb` and `rpn` will be used.
 
+- Download [some meta-data]() (soon) and put them in `datasets` folder.
+
 - Download our [pretrained weights](https://drive.google.com/drive/u/1/folders/1TAr7nZSvpB6nCZCC6nXBw6xgmMmlL0X9) and put them in corresponding folders in `pretrained_ckpt`.
 
 
