@@ -58,12 +58,12 @@ Evaluation without the SAF Head,
 </summary>
   
 ```bash
-python3 ./train_net_ensemble.py \
-    --num-gpus 1 \
+python3 ./test_net.py \
+    --num-gpus 8 \
     --eval-only \
-    --config-file ./myRegionCLIP/configs/COCO-InstanceSegmentation/vldet/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml \
+    --config-file ./sas_det/configs/regionclip/COCO-InstanceSegmentation/customized/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml \
     MODEL.WEIGHTS <path_to_your_weights> \
-    MODEL.CLIP.OFFLINE_RPN_CONFIG ./myRegionCLIP/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
+    MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_coco_48.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_65_cls_emb.pth \
     MODEL.CLIP.OPENSET_TEST_TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_65_cls_emb.pth \
@@ -78,12 +78,12 @@ Evaluation with the SAF Head,
 </summary>
   
 ```bash
-python3 ./train_net_ensemble.py \
-    --num-gpus 1 \
+python3 ./test_net.py \
+    --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/ovd_coco_R50_C4_ensemble_PLs.yaml \
     MODEL.WEIGHTS <path_to_your_weights> \
-    MODEL.CLIP.OFFLINE_RPN_CONFIG ./myRegionCLIP/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
+    MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_coco_48.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_48_base_cls_emb.pth \
     MODEL.CLIP.CONCEPT_POOL_EMB ./pretrained_ckpt/concept_emb/my_coco_48_base_17_cls_emb.pth \
@@ -131,12 +131,12 @@ Evaluation with RN50-C4 as the backbone,
 </summary>
   
 ```bash
-python3 ./train_net_ensemble.py \
-    --num-gpus 1 \
+python3 ./test_net.py \
+    --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml \
     MODEL.WEIGHTS <path_to_your_weights> \
-    MODEL.CLIP.OFFLINE_RPN_CONFIG ./myRegionCLIP/configs/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
+    MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_lvis_866_lsj.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/lvis_866_base_cls_emb.pth \
     MODEL.CLIP.CONCEPT_POOL_EMB ./pretrained_ckpt/concept_emb/my_lvis_866_base_337_cls_emb.pth \
@@ -154,12 +154,12 @@ Evaluation with RN50x4-C4 as the backbone,
 </summary>
   
 ```bash
-python3 ./train_net_ensemble.py \
-    --num-gpus 1 \
+python3 ./test_net.py \
+    --num-gpus 8 \
     --eval-only \
-    --config-file ./detpro/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml \
+    --config-file ./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml \
     MODEL.WEIGHTS <path_to_your_weights> \
-    MODEL.CLIP.OFFLINE_RPN_CONFIG ./configs/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
+    MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_lvis_866_lsj.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/lvis_866_base_cls_emb_rn50x4.pth \
     MODEL.CLIP.CONCEPT_POOL_EMB ./pretrained_ckpt/concept_emb/my_lvis_866_base_337_cls_emb_rn50x4.pth \
@@ -169,7 +169,7 @@ python3 ./train_net_ensemble.py \
     MODEL.RESNETS.DEPTH 200 \
     MODEL.ROI_BOX_HEAD.POOLER_RESOLUTION 18 \
     MODEL.ROI_MASK_HEAD.POOLER_RESOLUTION 18 \
-    MODEL.ENSEMBLE.TEST_CATEGORY_INFO "datasets/lvis_ovd_continue_cat_ids.json" \
+    MODEL.ENSEMBLE.TEST_CATEGORY_INFO "./datasets/lvis_ovd_continue_cat_ids.json" \
     MODEL.ENSEMBLE.ALPHA 0.33 MODEL.ENSEMBLE.BETA 0.67 \
     OUTPUT_DIR output/eval
 ```
