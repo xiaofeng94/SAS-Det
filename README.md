@@ -36,21 +36,18 @@ Create a new folder `pretrained_ckpt` to put those weights. In this repository, 
 <th valign="bottom">Novel AP</th>
 <th valign="bottom">Base AP</th>
 <th valign="bottom">Overall AP</th>
-<th valign="bottom">download</th>
 <!-- TABLE BODY -->
 <!-- ROW: with LSJ -->
  <tr><td align="left"><a href="./myRegionCLIP/configs/COCO-InstanceSegmentation/vldet/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml">w/o SAF head</a></td>
 <td align="center">31.4</td>
 <td align="center">55.7</td>
 <td align="center">49.4</td>
-<td align="center">/net/acadia4a/data/szhao/code/RegionCLIP/output/ovd_coco_defRegClip_ft_PLs_periodic_boxConf/model_final.pth</td>
 </tr>
 <!-- ROW: with out LSJ -->
  <tr><td align="left"><a href="./sas_det/configs/ovd_coco_R50_C4_ensemble_PLs.yaml">with SAF head</a></td>
 <td align="center">37.4</td>
 <td align="center">58.5</td>
 <td align="center">53.0</td>
-<td align="center">/net/acadia4a/data/szhao/code/RegionCLIP/output/ovd_coco_cocoRPN_ensemble_PLs_attn/model_final.pth</td>
 </tr>
 </tbody></table>
 
@@ -107,7 +104,6 @@ python3 ./test_net.py \
 <th valign="bottom">APc</th>
 <th valign="bottom">APf</th>
 <th valign="bottom">AP</th>
-<th valign="bottom">download</th>
 <!-- TABLE BODY -->
 <!-- ROW: with LSJ -->
  <tr><td align="left"><a href="./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml">RN50-C4 as backbone</a></td>
@@ -115,7 +111,6 @@ python3 ./test_net.py \
 <td align="center">27.1</td>
 <td align="center">32.9</td>
 <td align="center">28.1</td>
-<td align="center">/net/acadia4a/data/szhao/code/SAS-Det/output/ovd_lvis_ensemble_PLs_attn_re2/model_final.pth</td>
 </tr>
 <!-- ROW: with out LSJ -->
  <tr><td align="left"><a href="./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml">RN50x4-C4 as backbone</a></td>
@@ -123,7 +118,6 @@ python3 ./test_net.py \
 <td align="center">32.3</td>
 <td align="center">36.8</td>
 <td align="center">33.5</td>
-<td align="center">/net/acadia4a/data/szhao/code/SAS-Det/output/ovd_lvis_r50x4_ensemble_offPLs_attn_re/model_final.pth</td>
 </tr>
 </tbody></table>
 
