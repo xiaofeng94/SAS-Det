@@ -26,8 +26,6 @@ if __name__ == '__main__':
 
     PLData = json.load(open(pred_COCOJson_file, 'r'))
     
-    # import ipdb
-    # ipdb.set_trace()
     if args.raw:
         PL_list = PLData
         imageId_list = gt_img_ids
@@ -64,12 +62,8 @@ if __name__ == '__main__':
             #         PL_list.append(data)
             #         imageId_list.append(cur_image_id)
 
-    # import ipdb
-    # ipdb.set_trace()
     print( 'Total PL boxes num: %d, avg num: %.2f\n' % (len(PL_list), len(PL_list)/len(set(imageId_list))) )
 
-    # import ipdb
-    # ipdb.set_trace()
     curSaveJson = './.temp.json'
     with open(curSaveJson, 'w') as outfile:
         json.dump(PL_list, outfile)

@@ -580,8 +580,7 @@ if __name__ == "__main__":
 
     ## lvis_v1_cats_f \ cocoCats_48_names: 367 cats left
     # {'tv', 'laptop', 'train', 'car', 'skis', 'orange', 'donut', 'mouse', 'microwave', 'remote'} in COCO can't fully match lvis_v1_cats_f's words
-    import ipdb
-    ipdb.set_trace()
+    
     all_cats = cocoCats_48_names + remove_cls_names(lvis_v1_cats_f, cocoCats_48_names)  # in lvis order if not removed
     save_emb_file = './pretrained_ckpt/concept_emb/my_coco48_lvis_f367_cls_emb.pth'
 
@@ -589,8 +588,6 @@ if __name__ == "__main__":
 
     #########################################################################
 
-    # import ipdb
-    # ipdb.set_trace()
     # load CLIP models
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model, preprocess = clip.load(clip_type, device=device)

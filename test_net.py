@@ -104,22 +104,6 @@ class Trainer(DefaultTrainer):
             return evaluator_list[0]
         return DatasetEvaluators(evaluator_list)
 
-    # @classmethod
-    # def build_train_loader(cls, cfg):
-    #     """
-    #     Returns:
-    #         iterable
-
-    #     It now calls :func:`detectron2.data.build_detection_train_loader`.
-    #     Overwrite it if you'd like a different data loader.
-    #     """
-    #     if cfg.DATALOADER.SAMPLER_TRAIN in ['TrainingSampler', 'RepeatFactorTrainingSampler']:
-    #         data_loader = build_detection_train_loader(cfg, mapper=mapper)
-    #     else:
-    #         # e.g. for MultiDatasetSampler
-    #         data_loader = build_custom_train_loader(cfg, mapper=mapper)
-    #     return data_loader
-
     @classmethod
     def test_with_TTA(cls, cfg, model):
         logger = logging.getLogger("detectron2.trainer")

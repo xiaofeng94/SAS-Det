@@ -19,8 +19,6 @@ from detectron2.utils import comm
 
 from detectron2.modeling import ResNet, build_box_head, build_keypoint_head, build_mask_head, build_backbone
 from detectron2.modeling.roi_heads import ROI_HEADS_REGISTRY #, select_foreground_proposals
-# from detectron2.modeling.roi_heads import ROIHeads, CLIPRes5ROIHeads
-# from detectron2.modeling.roi_heads.clip_roi_heads import select_foreground_proposals
 from detectron2.modeling.matcher import Matcher
 from detectron2.modeling.poolers import ROIPooler
 from detectron2.modeling.proposal_generator.proposal_utils import add_ground_truth_to_proposals

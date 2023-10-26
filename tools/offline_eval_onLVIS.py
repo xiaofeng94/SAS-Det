@@ -46,14 +46,10 @@ if __name__ == '__main__':
             #     PL_list.append(data)
             #     imageId_list.append(cur_image_id)
 
-        # import ipdb
-        # ipdb.set_trace()
         print( 'Total PL boxes num: %d, avg num: %.2f\n' % (len(PL_list), len(PL_list)/len(set(imageId_list))) )
     else:
         PL_list = json.load(open(pred_LvisJson_file, 'r'))
 
-    # import ipdb
-    # ipdb.set_trace()
     # do evaluation
     lvis_results = LVISResults(lvis_gt, PL_list, max_dets=300)
     lvis_eval = LVISEval(lvis_gt, lvis_results, iou_type="bbox")

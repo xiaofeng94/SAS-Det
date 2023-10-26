@@ -16,13 +16,9 @@ from torch.nn import functional as F
 
 from detectron2.config import configurable
 from detectron2.layers import ShapeSpec, batched_nms, cat, cross_entropy, nonzero_tuple
-# from detectron2.layers.soft_nms import batched_soft_nms
 from detectron2.modeling.box_regression import Box2BoxTransform
 from detectron2.structures import Boxes, Instances
 from detectron2.utils.events import get_event_storage
-# from detectron2.utils.comm import MILCrossEntropy
-# from detectron2.modeling.roi_heads import FastRCNNOutputLayers
-# from .roi_heads.fast_rcnn import fast_rcnn_inference, _log_classification_stats
 
 from .roi_heads.clip_fast_rcnn import FastRCNNOutputLayers, fast_rcnn_inference, _log_classification_stats
 # logger = logging.getLogger(__name__)
@@ -114,21 +110,6 @@ class EnsembleFastRCNNOutputLayers(FastRCNNOutputLayers):
             "use_img_head_box_reg": cfg.MODEL.ENSEMBLE.USE_IMG_HEAD_BOX_REG,
         })
         return ret
-
-    # def forward(self, x):
-    #     """
-    #     Args:
-    #         x: per-region features of shape (N, ...) for N bounding boxes to predict.
-
-    #     Returns:
-    #         (Tensor, Tensor):
-    #         First tensor: shape (N,K+1), scores for each of the N box. Each row contains the
-    #         scores for K object categories and 1 background class.
-
-    #         Second tensor: bounding box regression deltas for each box. Shape is shape (N,Kx4),
-    #         or (N,4) for class-agnostic regression.
-    #     """
-    #     pass
 
     def text_head_forward(self, x):
         """
