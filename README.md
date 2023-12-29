@@ -105,7 +105,7 @@ python3 ./test_net.py \
     MODEL.CLIP.OPENSET_TEST_TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_65_cls_emb.pth \
     MODEL.ROI_HEADS.SOFT_NMS_ENABLED True \
     MODEL.ENSEMBLE.TEST_CATEGORY_INFO "./datasets/coco_ovd_continue_cat_ids.json" \
-    MODEL.ENSEMBLE.ALPHA 0.33 MODEL.ENSEMBLE.BETA 0.67 \
+    MODEL.ENSEMBLE.ALPHA 0.3 MODEL.ENSEMBLE.BETA 0.7 \
     OUTPUT_DIR output/eval
 ```
 </details>
