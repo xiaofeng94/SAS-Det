@@ -18,12 +18,10 @@ Download and install [Detectron2](https://github.com/facebookresearch/detectron2
 
 
 ## Download pretrained weights
-- Download various RegionCLIP's [pretrained weights](https://drive.google.com/drive/folders/1hzrJBvcCrahoRcqJRqzkIGFO_HUSJIii). Check [here](https://github.com/microsoft/RegionCLIP/blob/main/docs/MODEL_ZOO.md#model-downloading) for more details.
+- Download various [RegionCLIP's pretrained weights](https://drive.google.com/drive/folders/1hzrJBvcCrahoRcqJRqzkIGFO_HUSJIii). Check [here](https://github.com/microsoft/RegionCLIP/blob/main/docs/MODEL_ZOO.md#model-downloading) for more details.
 Create a new folder `pretrained_ckpt` to put those weights. In this repository, `regionclip`, `concept_emb` and `rpn` will be used.
 
-- Download [some metadata](https://drive.google.com/drive/u/1/folders/1R72q0Wg26-PQGqbaK3P3pT2vmGm9uzKU) and put them in `datasets` folder.
-
-- Download our [pretrained weights](https://drive.google.com/drive/u/1/folders/1TAr7nZSvpB6nCZCC6nXBw6xgmMmlL0X9) and put them in corresponding folders in `pretrained_ckpt`.
+- Download [our pretrained weights](https://drive.google.com/drive/u/1/folders/1TAr7nZSvpB6nCZCC6nXBw6xgmMmlL0X9) and put them in corresponding folders in `pretrained_ckpt`.
 
 
 ## Evaluation with released weights
@@ -38,7 +36,7 @@ Create a new folder `pretrained_ckpt` to put those weights. In this repository, 
 <th valign="bottom">Overall AP</th>
 <!-- TABLE BODY -->
 <!-- ROW: with LSJ -->
- <tr><td align="left"><a href="./myRegionCLIP/configs/COCO-InstanceSegmentation/vldet/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml">w/o SAF head</a></td>
+ <tr><td align="left"><a href="./sas_det/configs/regionclip/COCO-InstanceSegmentation/customized/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml">w/o SAF head</a></td>
 <td align="center">31.4</td>
 <td align="center">55.7</td>
 <td align="center">49.4</td>
