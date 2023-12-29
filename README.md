@@ -6,7 +6,7 @@ Official implementation of online self-training and a split-and-fusion (SAF) hea
 
 
 ## Installation
-Our project is developed on Detectron2. Please follow the official installation [instructions](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md), OR the following instructions.
+- Our project is developed on Detectron2. Please follow the official installation [instructions](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md), OR the following instructions.
 ```
 # create new environment
 conda create -n sas_det python=3.8
@@ -18,7 +18,10 @@ conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit
 # install Detectron2 from a local clone
 git clone https://github.com/facebookresearch/detectron2.git
 python -m pip install -e detectron2
+```
 
+- Install CLIP
+```
 # install CLIP
 pip install scipy
 pip install ftfy regex tqdm
