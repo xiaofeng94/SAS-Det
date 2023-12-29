@@ -6,13 +6,29 @@ Official implementation of online self-training and a split-and-fusion (SAF) hea
 
 
 ## Installation
+Our project is developed on Detectron2. Please follow the official installation [instructions](https://github.com/facebookresearch/detectron2/blob/main/INSTALL.md), OR the following instructions.
+```
+# create new environment
+conda create -n sas_det python=3.8
+conda activate sas_det
 
-Download and install [Detectron2](https://github.com/facebookresearch/detectron2). We recomend to put Detectron2 root folder into the root folder of this project.
+# install pytorch
+conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
+
+# install Detectron2 from a local clone
+git clone https://github.com/facebookresearch/detectron2.git
+python -m pip install -e detectron2
+
+# install CLIP
+pip install scipy
+pip install ftfy regex tqdm
+pip install git+https://github.com/openai/CLIP.git
+```
 
 
 ## Datasets
 
-- Please follow [RegionCLIP's instructions](https://github.com/microsoft/RegionCLIP/blob/main/datasets/README.md) to prepare COCO and LVIS datasets.
+- Please follow RegionCLIP's [dataset instructions](https://github.com/microsoft/RegionCLIP/blob/main/datasets/README.md) to prepare COCO and LVIS datasets.
 
 - Download and put [metadata](https://drive.google.com/drive/u/1/folders/1R72q0Wg26-PQGqbaK3P3pT2vmGm9uzKU) for datasets in the folder `datasets` (i.e., `$DETECTRON2_DATASETS` used in the last step), which will be used in our evaluation and training.
 
@@ -21,8 +37,10 @@ Download and install [Detectron2](https://github.com/facebookresearch/detectron2
 - Download various [RegionCLIP's pretrained weights](https://drive.google.com/drive/folders/1hzrJBvcCrahoRcqJRqzkIGFO_HUSJIii). Check [here](https://github.com/microsoft/RegionCLIP/blob/main/docs/MODEL_ZOO.md#model-downloading) for more details.
 Create a new folder `pretrained_ckpt` to put those weights. In this repository, `regionclip`, `concept_emb` and `rpn` will be used.
 
-- Download [our pretrained weights](https://drive.google.com/drive/u/1/folders/1TAr7nZSvpB6nCZCC6nXBw6xgmMmlL0X9) and put them in corresponding folders in `pretrained_ckpt`.
-
+- Download [our pretrained weights](https://drive.google.com/drive/u/1/folders/1TAr7nZSvpB6nCZCC6nXBw6xgmMmlL0X9) and put them in corresponding folders in `pretrained_ckpt`. 
+Our pretrained weights includes:
+    - `r50_3x_pre_RegCLIP_cocoRPN_2`: RPN weights pretrained only with COCO Base categories. This is used for experiments on COCO to avoid potential data leakage.
+    - `concept_emb`: Complementary to RegionCLIP's `concept_emb`.
 
 ## Evaluation with released weights
 
@@ -51,7 +69,7 @@ Create a new folder `pretrained_ckpt` to put those weights. In this repository, 
 
 <details>
 <summary>
-Evaluation without the SAF Head,
+Evaluation without the SAF Head (baseline in the paper),
 </summary>
   
 ```bash
@@ -59,7 +77,7 @@ python3 ./test_net.py \
     --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/regionclip/COCO-InstanceSegmentation/customized/CLIP_fast_rcnn_R_50_C4_ovd_PLs.yaml \
-    MODEL.WEIGHTS <path_to_your_weights> \
+    MODEL.WEIGHTS ./pretrained_ckpt/sas_det/sas_det_coco_no_saf_head_baseline.pth \
     MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_coco_48.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_65_cls_emb.pth \
@@ -79,7 +97,7 @@ python3 ./test_net.py \
     --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/ovd_coco_R50_C4_ensemble_PLs.yaml \
-    MODEL.WEIGHTS <path_to_your_weights> \
+    MODEL.WEIGHTS ./pretrained_ckpt/sas_det/sas_det_coco.pth \
     MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_1x_ovd_FSD.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_coco_48.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/coco_48_base_cls_emb.pth \
@@ -129,7 +147,7 @@ python3 ./test_net.py \
     --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml \
-    MODEL.WEIGHTS <path_to_your_weights> \
+    MODEL.WEIGHTS ./pretrained_ckpt/sas_det/sas_det_lvis_r50.pth \
     MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_lvis_866_lsj.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/lvis_866_base_cls_emb.pth \
@@ -152,7 +170,7 @@ python3 ./test_net.py \
     --num-gpus 8 \
     --eval-only \
     --config-file ./sas_det/configs/ovd_lvis_R50_C4_ensemble_PLs.yaml \
-    MODEL.WEIGHTS <path_to_your_weights> \
+    MODEL.WEIGHTS ./pretrained_ckpt/sas_det/sas_det_lvis_r50x4.pth \
     MODEL.CLIP.OFFLINE_RPN_CONFIG ./sas_det/configs/regionclip/LVISv1-InstanceSegmentation/mask_rcnn_R_50_FPN_1x.yaml \
     MODEL.CLIP.BB_RPN_WEIGHTS ./pretrained_ckpt/rpn/rpn_lvis_866_lsj.pth \
     MODEL.CLIP.TEXT_EMB_PATH ./pretrained_ckpt/concept_emb/lvis_866_base_cls_emb_rn50x4.pth \
