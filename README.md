@@ -1,6 +1,7 @@
-# Improving Pseudo Labels for Open-Vocabulary Object Detection
+# Taming Self-Training for Open-Vocabulary Object Detection
 
 Official implementation of online self-training and a split-and-fusion (SAF) head for Open-Vocabulary Object Detection (OVD), SAS-Det for short.
+This project was named as Improving Pseudo Labels for Open-Vocabulary Object Detection.
 
 [arXiv](https://arxiv.org/abs/2308.06412)
 
